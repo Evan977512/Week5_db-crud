@@ -1,7 +1,36 @@
 var express = require("express");
 var app = express();
 
-let comments = [];
+// let comments = [];
+
+const { Sequelize, DataTypes } = require("sequelize");
+
+// Option 2: Passing parameters separately (sqlite) / save it as a file
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: "database.sqlite",
+});
+
+const User = sequelize.define(
+  "User",
+  {
+    // Model attributes are defined here
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      // allowNull defaults to true
+    },
+  },
+  {
+    // Other model options go here
+  }
+);
+
+// `sequelize.define` also returns the model
+console.log(User === sequelize.models.User); // true
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
