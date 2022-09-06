@@ -7,6 +7,22 @@
     <title>my page</title>
   </head>
   <body>
-    hello my friends. good to see you. why so serious?
+    <h1>hello my friends. good to see you. why so serious?</h1>
+    <h3><%= 1 + 3 %></h3>
+
+    <h1>comment list</h1>
+    <ul>
+      <% for (comment of comments) { %>
+      <li><%= comment %></li>
+      <% } %>
+    </ul>
+
+    <hr />
+
+    <form action="/create" method="post">
+      <label for="content">content:</label>
+      <input type="text" name="content" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
   </body>
 </html>
