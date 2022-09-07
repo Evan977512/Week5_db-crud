@@ -89,5 +89,21 @@ app.post("/update/:id", async (req, res) => {
   res.redirect("/");
 });
 
+// delete data
+app.post("/delete/:id", async (req, res) => {
+  // console.log(req);
+  console.log(req.params);
+  const { id } = req.params;
+
+  // delete row
+  await Comments.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  res.redirect("/");
+});
+
 app.listen(8080);
 console.log("Server is listening on port 8080");

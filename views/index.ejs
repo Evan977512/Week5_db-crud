@@ -16,7 +16,10 @@
       <li><%= comment.id %>. <%= comment.content %></li>
       <form action="/update/<%= comment.id %>" method="post">
         <input type="text" name="content" />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="update" />
+      </form>
+      <form action="/delete/<%= comment.id %>" method="post">
+        <input type="submit" value="delete" />
       </form>
       <% } %>
     </ul>
