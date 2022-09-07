@@ -11,17 +11,13 @@ const sequelize = new Sequelize({
   storage: "database.sqlite",
 });
 
-const User = sequelize.define(
-  "User",
+const Comments = sequelize.define(
+  "Comments",
   {
     // Model attributes are defined here
-    firstName: {
+    content: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
     },
   },
   {
@@ -29,8 +25,11 @@ const User = sequelize.define(
   }
 );
 
-// `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
+(async () => {
+  // create a table
+  await Comments.sync();
+  console.log("The table for the Comments model was just created");
+})();
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -41,8 +40,13 @@ app.set("view engine", "ejs");
 // use res.render to load up an ejs view file
 
 // index page
-app.get("/", function (req, res) {
+app.get("/", async (req, res) => {
   // res.render("index", { num: 30 });
+
+  // Find all users
+  const comments = await Comments.findAll();
+  console.log(comments);
+
   res.render("index", { comments: comments });
 });
 
@@ -51,11 +55,14 @@ app.get("/create", (req, res) => {
   res.send("get hi");
 });
 
-app.post("/create", (req, res) => {
+app.post("/create", async (req, res) => {
   console.log(req.body);
   const { content } = req.body;
-  comments.push(content);
-  console.log(comments);
+
+  // Create a data
+  const jane = await Comments.create({ content: content });
+  console.log("Jane's auto-generated ID:", jane.id);
+
   res.redirect("/");
 });
 
