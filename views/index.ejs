@@ -10,14 +10,20 @@
     <h1>hello my friends. good to see you. why so serious?</h1>
     <h3><%= 1 + 3 %></h3>
 
-    <h1>comment list</h1>
+    <h1>update & delete list</h1>
     <ul>
       <% for (comment of comments) { %>
-      <li><%= comment.content %></li>
+      <li><%= comment.id %>. <%= comment.content %></li>
+      <form action="/update/<%= comment.id %>" method="post">
+        <input type="text" name="content" />
+        <input type="submit" value="Submit" />
+      </form>
       <% } %>
     </ul>
 
     <hr />
+
+    <h1>add new list</h1>
 
     <form action="/create" method="post">
       <label for="content">content:</label>

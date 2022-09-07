@@ -45,7 +45,7 @@ app.get("/", async (req, res) => {
 
   // Find all users
   const comments = await Comments.findAll();
-  console.log(comments);
+  // console.log(comments);
 
   res.render("index", { comments: comments });
 });
@@ -55,13 +55,36 @@ app.get("/create", (req, res) => {
   res.send("get hi");
 });
 
+// create list
 app.post("/create", async (req, res) => {
   console.log(req.body);
   const { content } = req.body;
 
   // Create a data
   const jane = await Comments.create({ content: content });
-  console.log("Jane's auto-generated ID:", jane.id);
+  console.log("Evan's auto-generated ID:", jane.id);
+
+  res.redirect("/");
+});
+
+// update list
+app.post("/update/:id", async (req, res) => {
+  // console.log(req);
+  console.log(req.params);
+  console.log(req.body);
+
+  const { content } = req.body;
+  const { id } = req.params;
+
+  // update data
+  await Comments.update(
+    { content: content },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
 
   res.redirect("/");
 });
